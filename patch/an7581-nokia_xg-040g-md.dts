@@ -8,7 +8,7 @@
 
 / {
 	model = "Nokia Bell XG-040G-MD";
-	compatible = "bell,xg-040g-md", "airoha,an7581";
+	compatible = "nokia,xg-040g-md", "airoha,an7581";
 
 	aliases {
 		serial0 = &uart1;
@@ -23,20 +23,6 @@
 	memory@80000000 {
 		device_type = "memory";
 		reg = <0x0 0x80000000 0x0 0x80000000>;
-	};
-
-	efuse-banks {
-		compatible = "airoha,an7581-efuses";
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		bank@0 {
-			reg = <0>;
-		};
-
-		bank@1 {
-			reg = <1>;
-		};
 	};
 
 	leds {
@@ -70,6 +56,18 @@
 			function = LED_FUNCTION_STATUS;
 			gpios = <&en7581_pinctrl 20 GPIO_ACTIVE_LOW>;
 		};
+
+		usb_led1: led-4 {
+			label = "green:usb-1";
+			gpios = <&en7581_pinctrl 21 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "usbport";
+		};
+
+		usb_led2: led-5 {
+			label = "green:usb-2";
+			gpios = <&en7581_pinctrl 22 GPIO_ACTIVE_LOW>;
+			linux,default-trigger = "usbport";
+		};
 	};
 
 	keys {
@@ -92,7 +90,6 @@
 			function = "mdio";
 			groups = "mdio";
 		};
-
 		conf {
 			pins = "gpio2";
 			output-high;
@@ -126,6 +123,9 @@
 };
 
 &spi_nand {
+	nand-ecc-strength = <4>;
+	nand-ecc-step-size = <512>;
+
 	partitions {
 		compatible = "fixed-partitions";
 		#address-cells = <1>;
@@ -137,13 +137,18 @@
 		};
 
 		partition@80000 {
-			label = "env";
-			reg = <0x00080000 0x00080000>;
+			label = "bosa";
+			reg = <0x00080000 0x00040000>;
+		};
+
+		partition@c0000 {
+			label = "ri";
+			reg = <0x000c0000 0x00040000>;
 		};
 
 		partition@100000 {
 			label = "ubi";
-			reg = <0x00100000 0x0ff00000>;
+			reg = <0x00100000 0xff00000>;
 		};
 	};
 };
@@ -164,7 +169,7 @@
 	status = "okay";
 	phy-handle = <&phy15>;
 	phy-mode = "2500base-x";
-	label = "eth1";
+	openwrt,netdev-name = "lan1";
 };
 
 &switch {
