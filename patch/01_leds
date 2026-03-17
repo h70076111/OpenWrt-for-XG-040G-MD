@@ -1,4 +1,6 @@
-#!/bin/sh
+#
+# Copyright (C) 2015 OpenWrt.org
+#
 
 . /lib/functions/uci-defaults.sh
 
@@ -12,17 +14,15 @@ airoha,an7581-evb)
 	ucidef_set_led_usbport "usb2" "USB 2" "green:usb-2" "usb3-port1" "usb4-port1"
 	;;
 nokia,xg-040g-md)
-	LED_PATH="/sys/class/leds/green:internet"
-	if [ -d "$LED_PATH" ]; then
-		echo "netdev" > "$LED_PATH/trigger" 2>/dev/null
-		echo "lan1" > "$LED_PATH/device_name" 2>/dev/null
-		echo "1" > "$LED_PATH/link" 2>/dev/null
-		echo "1" > "$LED_PATH/tx" 2>/dev/null
-		echo "1" > "$LED_PATH/rx" 2>/dev/null
-	fi
-
+	ucidef_set_led_netdev "internet" "INTERNET" "green:internet" "lan1"
 	ucidef_set_led_usbport "usb1" "USB 3.0" "green:usb-1" "1-1"
 	ucidef_set_led_usbport "usb2" "USB 2.0" "green:usb-2" "2-1"
+	;;
+gemtek,w1700k-ubi)
+	ucidef_set_led_netdev "lan3-yellow" "lan3" "yellow:lan-3" "lan3" "link_10 link_100"
+	ucidef_set_led_netdev "lan3-green" "lan3" "green:lan-3" "lan3" "link_1000 tx rx"
+	ucidef_set_led_netdev "lan4-yellow" "lan4" "yellow:lan-4" "lan4" "link_10 link_100"
+	ucidef_set_led_netdev "lan4-green" "lan4" "green:lan-4" "lan4" "link_1000 tx rx"
 	;;
 esac
 
