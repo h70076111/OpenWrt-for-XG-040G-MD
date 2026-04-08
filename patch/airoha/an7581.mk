@@ -74,7 +74,6 @@ define Device/nokia_xg-040g-md
   $(call Device/FitImageLzma)
   DEVICE_VENDOR := Nokia
   DEVICE_MODEL := Bell XG-040G-MD
-  DEVICE_VARIANT := Router Mode
   DEVICE_DTS := an7581-nokia_xg-040g-md
   SOC := an7581
   KERNEL_LOADADDR := 0x80088000
@@ -87,7 +86,7 @@ define Device/nokia_xg-040g-md
   IMAGES := factory.bin sysupgrade.bin
   IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
-  DEVICE_PACKAGES := kmod-phy-airoha-en8811h kmod-i2c-an7581 ubi-utils usbutils kmod-usb2 kmod-usb3 kmod-usb-storage-uas
+  DEVICE_PACKAGES := kmod-phy-airoha-en8811h kmod-i2c-an7581 kmod-leds-gpio kmod-gpio-button-hotplug uboot-envtools ubi-utils kmod-usb2 kmod-usb3 kmod-usb-storage-uas
 endef
 TARGET_DEVICES += nokia_xg-040g-md
 

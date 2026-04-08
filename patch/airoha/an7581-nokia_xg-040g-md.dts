@@ -29,7 +29,6 @@
 		compatible = "gpio-leds";
 
 		pwr_led: led-0 {
-			label = "green:power";
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_POWER;
 			gpios = <&en7581_pinctrl 17 GPIO_ACTIVE_LOW>;
@@ -37,34 +36,29 @@
 		};
 
 		pon_led: led-1 {
-			label = "green:pon";
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_STATUS;
 			gpios = <&en7581_pinctrl 18 GPIO_ACTIVE_LOW>;
 		};
 
 		los_led: led-2 {
-			label = "red:los";
 			color = <LED_COLOR_ID_RED>;
 			function = LED_FUNCTION_STATUS;
 			gpios = <&en7581_pinctrl 19 GPIO_ACTIVE_LOW>;
 		};
 
 		internet_led: led-3 {
-			label = "green:internet";
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_STATUS;
 			gpios = <&en7581_pinctrl 20 GPIO_ACTIVE_LOW>;
 		};
 
 		usb_led1: led-4 {
-			label = "green:usb-1";
 			gpios = <&en7581_pinctrl 21 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "usbport";
 		};
 
 		usb_led2: led-5 {
-			label = "green:usb-2";
 			gpios = <&en7581_pinctrl 22 GPIO_ACTIVE_LOW>;
 			linux,default-trigger = "usbport";
 		};
@@ -74,7 +68,6 @@
 		compatible = "gpio-keys";
 
 		reset {
-			label = "reset";
 			gpios = <&en7581_pinctrl 0 GPIO_ACTIVE_LOW>;
 			linux,code = <KEY_RESTART>;
 			debounce-interval = <60>;
